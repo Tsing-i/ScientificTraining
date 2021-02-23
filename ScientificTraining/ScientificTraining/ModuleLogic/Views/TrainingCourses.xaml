@@ -1,0 +1,225 @@
+﻿<UserControl x:Class="ModuleLogic.Views.TrainingCourses"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"      
+             xmlns:sz="http://schemas.shuzai.com/wpf/toolkit"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             prism:ViewModelLocator.AutoWireViewModel="True" 
+             Height="980" Width="1920">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/TrainingCoursesStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="#F5F6FA">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="433"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Width="393" Height="959">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="504"/>
+                <RowDefinition Height="455"/>
+            </Grid.RowDefinitions>
+            <ContentControl prism:RegionManager.RegionName="TimeAreaContentRegion"/>
+            <ContentControl Grid.Row="1" prism:RegionManager.RegionName="KeyboardTemplateContentRegion"/>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="93"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Visibility="{Binding Dashboard_PC}" Grid.Row="2" Margin="0,0,20,50" Background="#FFFFFF">
+                <WrapPanel Margin="10,0,0,0">
+                    <TextBox x:Name="TextDashboard_1" Text="{Binding TextDashboard_1_Text}" Style="{StaticResource textboxStyle}">
+                        <TextBox.InputBindings>
+                            <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding PopupVirtualKeyboard}" CommandParameter="Dashboard_1"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+                    <TextBox x:Name="TextDashboard_2" Text="{Binding TextDashboard_2_Text}" Style="{StaticResource textboxStyle}">
+                        <TextBox.InputBindings>
+                            <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding PopupVirtualKeyboard}" CommandParameter="Dashboard_2"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+                    <TextBox x:Name="TextDashboard_3" Text="{Binding TextDashboard_3_Text}" Style="{StaticResource textboxStyle}">
+                        <TextBox.InputBindings>
+                            <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding PopupVirtualKeyboard}" CommandParameter="Dashboard_3"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+                    <TextBox x:Name="TextDashboard_4" Text="{Binding TextDashboard_4_Text}" Style="{StaticResource textboxStyle}">
+                        <TextBox.InputBindings>
+                            <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding PopupVirtualKeyboard}" CommandParameter="Dashboard_4"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+                    <TextBox x:Name="TextDashboard_5" Text="{Binding TextDashboard_5_Text}" Style="{StaticResource textboxStyle}">
+                        <TextBox.InputBindings>
+                            <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding PopupVirtualKeyboard}" CommandParameter="Dashboard_5"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+                    <TextBox x:Name="TextDashboard_6" Text="{Binding TextDashboard_6_Text}" Style="{StaticResource textboxStyle}">
+                        <TextBox.InputBindings>
+                            <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding PopupVirtualKeyboard}" CommandParameter="Dashboard_6"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+                    <TextBox x:Name="TextDashboard_7" Text="{Binding TextDashboard_7_Text}" Style="{StaticResource textboxStyle}">
+                        <TextBox.InputBindings>
+                            <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding PopupVirtualKeyboard}" CommandParameter="Dashboard_7"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+                    <TextBox x:Name="TextDashboard_8" Text="{Binding TextDashboard_8_Text}" Style="{StaticResource textboxStyle}">
+                        <TextBox.InputBindings>
+                            <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding PopupVirtualKeyboard}" CommandParameter="Dashboard_8"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+                    <TextBox x:Name="TextDashboard_9" Text="{Binding TextDashboard_9_Text}" Style="{StaticResource textboxStyle}" >
+                        <TextBox.InputBindings>
+                            <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding PopupVirtualKeyboard}" CommandParameter="Dashboard_9"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+                    <TextBox x:Name="TextDashboard_10" Text="{Binding TextDashboard_10_Text}" Style="{StaticResource textboxStyle}">
+                        <TextBox.InputBindings>
+                            <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding PopupVirtualKeyboard}" CommandParameter="Dashboard_10"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+                </WrapPanel>
+            </Grid>
+            <Grid Visibility="{Binding Dashboard_Android}" Grid.Row="2" Margin="0,0,20,50" Background="#FFFFFF">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <ListBox x:Name="Lst" ItemsSource = "{Binding Path=AndroidCollectionView}"  BorderThickness="0" Margin="12,0,0,0" Height="35">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectionChangedCmd}"
+                             CommandParameter="{Binding ElementName=Lst}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel IsItemsHost="True" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                </ListBox>
+                <TextBox Grid.Row="1" Text="{Binding TextDashboard_11_Text}" IsReadOnly="True" Background="#FFFFFF" FontSize="25" BorderThickness="0" Margin="0,50,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+            </Grid>
+            <Border Grid.Row="1" CornerRadius="10" Height="53" Margin="0,0,20,0" Background="#1DA773">
+                <Grid>
+                    <!--跳水项目标题类型-->
+                    <WrapPanel VerticalAlignment="Center" Visibility="{Binding DivingTitleTemplateVisibility}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="145"/>
+                                <ColumnDefinition Width="145"/>
+                                <ColumnDefinition Width="145"/>
+                                <ColumnDefinition Width="145"/>
+                                <ColumnDefinition Width="145"/>
+                                <ColumnDefinition Width="145"/>
+                                <ColumnDefinition Width="145"/>
+                                <ColumnDefinition Width="145"/>
+                                <ColumnDefinition Width="145"/>
+                                <ColumnDefinition Width="145"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Content="弹网" Style="{StaticResource labelStyle}"/>
+                            <Label Grid.Column="1" Content="陆台" Style="{StaticResource labelStyle}"/>
+                            <Label Grid.Column="2" Content="陆板" Style="{StaticResource labelStyle}"/>
+                            <Label Grid.Column="3" Content="一米板" Style="{StaticResource labelStyle}"/>
+                            <Label Grid.Column="4" Content="三米板" Style="{StaticResource labelStyle}"/>
+                            <Label Grid.Column="5" Content="三米台" Style="{StaticResource labelStyle}"/>
+                            <Label Grid.Column="6" Content="五米台" Style="{StaticResource labelStyle}"/>
+                            <Label Grid.Column="7" Content="七米台" Style="{StaticResource labelStyle}"/>
+                            <Label Grid.Column="8" Content="十米台" Style="{StaticResource labelStyle}"/>
+                            <Label Grid.Column="9" Content="力量训练" Style="{StaticResource labelStyle}"/>
+                        </Grid>
+                    </WrapPanel>
+                    <!--蹦床项目标题类型-->
+                    <WrapPanel VerticalAlignment="Center" Visibility="{Binding TrampolineTitleTemplateVisibility}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="145"/>
+                                <ColumnDefinition Width="145"/>
+                                <ColumnDefinition Width="145"/>
+                                <ColumnDefinition Width="145"/>
+                                <ColumnDefinition Width="145"/>
+                                <ColumnDefinition Width="145"/>
+                                <ColumnDefinition Width="145"/>
+                                <ColumnDefinition Width="145"/>
+                                <ColumnDefinition Width="145"/>
+                                <ColumnDefinition Width="145"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Content="直棍跳" Style="{StaticResource labelStyle}"/>
+                            <Label Grid.Column="1" Content="单周空翻" Style="{StaticResource labelStyle}"/>
+                            <Label Grid.Column="2" Content="前团一..." ToolTip="前团一周转体180" Style="{StaticResource labelStyle}"/>
+                            <Label Grid.Column="3" Content="后团一..." ToolTip="后团一周转体180" Style="{StaticResource labelStyle}"/>
+                            <Label Grid.Column="4" Content="叉腰跳" Style="{StaticResource labelStyle}"/>
+                            <Label Grid.Column="5" Content="垂直跳" Style="{StaticResource labelStyle}"/>
+                            <Label Grid.Column="6" Content="腹着网" Style="{StaticResource labelStyle}"/>
+                            <Label Grid.Column="7" Content="背着网" Style="{StaticResource labelStyle}"/>
+                            <Label Grid.Column="8" Content="大跳" Style="{StaticResource labelStyle}"/>
+                            <Label Grid.Column="9" Content="力量训练" Style="{StaticResource labelStyle}"/>
+                        </Grid>
+                    </WrapPanel>
+                    <!--田径项目标题类型-->
+                    <!--体操项目标题类型-->
+                    <WrapPanel VerticalAlignment="Center" Visibility="Hidden">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="145"/>
+                                <ColumnDefinition Width="145"/>
+                                <ColumnDefinition Width="145"/>
+                                <ColumnDefinition Width="145"/>
+                                <ColumnDefinition Width="145"/>
+                                <ColumnDefinition Width="145"/>
+                                <ColumnDefinition Width="145"/>
+                                <ColumnDefinition Width="145"/>
+                                <ColumnDefinition Width="145"/>
+                                <ColumnDefinition Width="145"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Content="占位1" Style="{StaticResource labelStyle}"/>
+                            <Label Grid.Column="1" Content="占位2" Style="{StaticResource labelStyle}"/>
+                            <Label Grid.Column="2" Content="占位3" Style="{StaticResource labelStyle}"/>
+                            <Label Grid.Column="3" Content="占位4" Style="{StaticResource labelStyle}"/>
+                            <Label Grid.Column="4" Content="占位5" Style="{StaticResource labelStyle}"/>
+                            <Label Grid.Column="5" Content="占位6" Style="{StaticResource labelStyle}"/>
+                            <Label Grid.Column="6" Content="占位7" Style="{StaticResource labelStyle}"/>
+                            <Label Grid.Column="7" Content="占位8" Style="{StaticResource labelStyle}"/>
+                            <Label Grid.Column="8" Content="占位9" Style="{StaticResource labelStyle}"/>
+                            <Label Grid.Column="9" Content="占位10" Style="{StaticResource labelStyle}"/>
+                        </Grid>
+                    </WrapPanel>
+                </Grid>
+            </Border>
+            <Grid >
+                <WrapPanel Height="70">
+                    <Label Name="currenTimeLabel" Margin="25,10,0,0" Content="{Binding ExactDate}" FontSize="35" FontWeight="Bold" Foreground="#3A3933"/>
+                </WrapPanel>
+                <Border Width="212" Height="60" HorizontalAlignment="Right" Margin="0,20,487,0" Background="#FFFFFF" CornerRadius="10">
+                    <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Label Name="Label_UserPosition" Content="{Binding UserPosition}" FontSize="24" Foreground="#383937"/>
+                        <Label Name="Label_Coach" Content="{Binding Coach}" FontSize="24" Foreground="#383937"/>
+                    </WrapPanel>
+                </Border>
+                <Border Width="240" Height="60" HorizontalAlignment="Right" Margin="0,20,170,0" Background="#FFFFFF" CornerRadius="10">
+                    <sz:ComboBoxExt x:Name="AthletesCombox"
+                                        ToolTip="用户双击左键,更新用户列表"
+                                        MouseDoubleClick="AthletesCombox_MouseDoubleClick"
+                                        Width="200" 
+                                        Height="40"
+                                        BorderThickness="0" 
+                                        IsSearchEnabled="True" />
+                </Border>
+                <Button x:Name="PublishPlan" 
+                        ToolTip="发布训练计划"
+                        Width="32" 
+                        Height="32"
+                        HorizontalAlignment="Right"
+                        Margin="0,20,70,0"
+                        Style="{StaticResource publishStyle}" 
+                        Click="PublishPlan_Click"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

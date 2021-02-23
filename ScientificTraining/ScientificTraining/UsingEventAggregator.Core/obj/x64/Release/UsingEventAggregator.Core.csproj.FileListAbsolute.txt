@@ -1,0 +1,17 @@
+D:\ScientificTraining\ScientificTraining\UsingEventAggregator.Core\bin\x64\Release\UsingEventAggregator.Core.exe.config
+D:\ScientificTraining\ScientificTraining\UsingEventAggregator.Core\bin\x64\Release\UsingEventAggregator.Core.exe
+D:\ScientificTraining\ScientificTraining\UsingEventAggregator.Core\bin\x64\Release\UsingEventAggregator.Core.pdb
+D:\ScientificTraining\ScientificTraining\UsingEventAggregator.Core\bin\x64\Release\CommonServiceLocator.dll
+D:\ScientificTraining\ScientificTraining\UsingEventAggregator.Core\bin\x64\Release\Prism.dll
+D:\ScientificTraining\ScientificTraining\UsingEventAggregator.Core\bin\x64\Release\Prism.Wpf.dll
+D:\ScientificTraining\ScientificTraining\UsingEventAggregator.Core\bin\x64\Release\System.ValueTuple.dll
+D:\ScientificTraining\ScientificTraining\UsingEventAggregator.Core\bin\x64\Release\System.Windows.Interactivity.dll
+D:\ScientificTraining\ScientificTraining\UsingEventAggregator.Core\bin\x64\Release\Prism.pdb
+D:\ScientificTraining\ScientificTraining\UsingEventAggregator.Core\bin\x64\Release\Prism.xml
+D:\ScientificTraining\ScientificTraining\UsingEventAggregator.Core\bin\x64\Release\Prism.Wpf.pdb
+D:\ScientificTraining\ScientificTraining\UsingEventAggregator.Core\bin\x64\Release\Prism.Wpf.xml
+D:\ScientificTraining\ScientificTraining\UsingEventAggregator.Core\bin\x64\Release\System.ValueTuple.xml
+D:\ScientificTraining\ScientificTraining\UsingEventAggregator.Core\obj\x64\Release\UsingEventAggregator.Core.csproj.CoreCompileInputs.cache
+D:\ScientificTraining\ScientificTraining\UsingEventAggregator.Core\obj\x64\Release\UsingEventAggregator.Core.csproj.CopyComplete
+D:\ScientificTraining\ScientificTraining\UsingEventAggregator.Core\obj\x64\Release\UsingEventAggregator.Core.exe
+D:\ScientificTraining\ScientificTraining\UsingEventAggregator.Core\obj\x64\Release\UsingEventAggregator.Core.pdb

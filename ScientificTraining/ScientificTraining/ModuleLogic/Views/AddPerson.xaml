@@ -1,0 +1,91 @@
+﻿<Window x:Class="ModuleLogic.Views.AddPerson"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"             
+             prism:ViewModelLocator.AutoWireViewModel="True" 
+             Height="550" Width="403"
+             WindowStyle="None" AllowsTransparency="True" Background="Transparent" WindowStartupLocation="CenterScreen" OpacityMask="White" ResizeMode="NoResize">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/AddPerson.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid x:Name="gridDrag" Background="Transparent">
+        <Border BorderThickness="0" Background="#1DA773" CornerRadius="10">
+            <Grid Background="Transparent" Margin="0,35,0,0">
+                <Button 
+                    Width="10.25" Height="13.5" 
+                    Margin="0,-26,20,0" 
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top" 
+                    Style="{StaticResource TimeForwardStyle}"
+                    Click="Close_Click"/>
+                <Border BorderThickness="0" Background="White" CornerRadius="0,0,10,10">
+                    <StackPanel>
+                        <WrapPanel Margin="0,50,0,0" Style="{DynamicResource WrapPanelStyle}">
+                            <Label  Content="姓名" Style="{DynamicResource LabelStyle}"/>
+                            <StackPanel Margin="5,5,0,0">
+                                <TextBox x:Name="textbox_1" BorderBrush="{x:Null}" Style="{DynamicResource TextBoxStyle}"/>
+                                <Line Style="{DynamicResource LineStyle}"/>
+                            </StackPanel>
+                        </WrapPanel>
+                        <WrapPanel Style="{DynamicResource WrapPanelStyle}">
+                            <Label Content="账号" Style="{DynamicResource LabelStyle}"/>
+                            <StackPanel Margin="5,5,0,0">
+                                <TextBox x:Name="textbox_2" BorderBrush="{x:Null}" Style="{DynamicResource TextBoxStyle}"/>
+                                <Line Style="{DynamicResource LineStyle}"/>
+                            </StackPanel>
+                        </WrapPanel>
+                        <WrapPanel Style="{DynamicResource WrapPanelStyle}">
+                            <Label Content="密码" Style="{DynamicResource LabelStyle}"/>
+                            <StackPanel Margin="5,5,0,0">
+                                <TextBox x:Name="textbox_3" BorderBrush="{x:Null}" Style="{DynamicResource TextBoxStyle}"/>
+                                <Line Style="{DynamicResource LineStyle}"/>
+                            </StackPanel>
+                        </WrapPanel>
+                        <WrapPanel Style="{DynamicResource WrapPanelStyle}">
+                            <Label Content="性别" Style="{DynamicResource LabelStyle}"/>
+                            <StackPanel Margin="5,0,0,0">
+                                <ComboBox Name="Gender" Height="25" Width="260" BorderThickness="0"/>
+                                <Line Style="{DynamicResource LineStyle}"/>
+                            </StackPanel>
+                        </WrapPanel>
+                        <WrapPanel Style="{DynamicResource WrapPanelStyle}">
+                            <Label Content="权限" Style="{DynamicResource LabelStyle}"/>
+                            <StackPanel Margin="5,0,0,0">
+                                <ComboBox Name="Jurisdiction" Height="25" Width="260" BorderThickness="0"/>
+                                <Line Style="{DynamicResource LineStyle}"/>
+                            </StackPanel>
+                        </WrapPanel>
+                        <WrapPanel Style="{DynamicResource WrapPanelStyle}">
+                            <Label Content="手机" Style="{DynamicResource LabelStyle}"/>
+                            <StackPanel Margin="5,5,0,0" Width="260">
+                                <TextBox x:Name="textbox_4" BorderBrush="{x:Null}" Style="{DynamicResource TextBoxStyle}"/>
+                                <Line Style="{DynamicResource LineStyle}"/>
+                            </StackPanel>
+                            <Image Width="20" Height="20" Source="/Images/Tips.png" ToolTip="务必填写正确的手机号，用于体测报告的唯一标识..."/>
+                        </WrapPanel>
+                        <WrapPanel Style="{DynamicResource WrapPanelStyle}">
+                            <Label Content="备注" Style="{DynamicResource LabelStyle}"/>
+                            <StackPanel Margin="5,5,0,0">
+                                <TextBox x:Name="textbox_6" BorderBrush="{x:Null}" Style="{DynamicResource TextBoxStyle}"/>
+                                <Line Style="{DynamicResource LineStyle}"/>
+                            </StackPanel>
+                        </WrapPanel>
+                        <Button x:Name="Confirm" 
+                                Foreground="#1DA773" 
+                                Content="确认" 
+                                Margin="0,30,35,0"
+                                HorizontalAlignment="Right" 
+                                Width="60" 
+                                Height="32"
+                                Style="{StaticResource buttonStyle}"
+                                Click="Confirm_Click"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

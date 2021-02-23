@@ -1,0 +1,109 @@
+﻿<Window x:Class="ModuleLogic.Views.Table"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"             
+             prism:ViewModelLocator.AutoWireViewModel="True" 
+             xmlns:lvc="clr-namespace:LiveCharts;assembly=LiveCharts"
+             Width="1920" Height="768" 
+             Title="  体测仪报告"
+             WindowStyle="ToolWindow">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/AddPerson.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid x:Name="grid1" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <WrapPanel x:Name="wrapPanel1" Margin="30,10,0,0">
+            <Label x:Name="userNameLabel1" FontWeight="Bold" FontSize="18"/>
+            <Label Content="1.身高" Margin="20,0,0,0"/>
+            <Label Content="2.年龄"/>
+            <Label Content="3.体重"/>
+            <Label Content="4.收缩压"/>
+            <Label Content="5.舒张压"/>
+            <Label Content="6.脉搏"/>
+            <Label Content="7.细胞内液"/>
+            <Label Content="8.建议每日摄取卡路里"/>
+            <Label Content="9.除脂肪量"/>
+            <Label Content="10.肌肉量"/>
+            <Label Content="11.脂肪量"/>
+            <Label Content="12.基础代谢值"/>
+            <Label Content="13.其他成份"/>
+            <Label Content="14.水分率"/>
+            <Label Content="15.水分含量"/>
+            <Label Content="16.骨骼量"/>
+            <Label Content="17.细胞外液"/>
+            <Label Content="18.内脏等级"/>
+            <Label Content="19.血氧"/>
+            <Label Content="20.体温"/>
+            <Label Content="21.腰臀比"/>
+            <Label Content="22.腰围"/>
+            <Label Content="23.臀围"/>
+            <Label Content="24.体质指数"/>
+        </WrapPanel>
+        <WrapPanel x:Name="wrapPanel2" Margin="30,10,0,0">
+            <Label x:Name="userNameLabel2" FontWeight="Bold" FontSize="18"/>
+            <Label Content="1.血氧（M/F）" Margin="20,0,0,0"/>
+            <Label Content="2.身高（cm）"/>
+            <Label Content="3.体重（kg）"/>
+            <Label Content="4.年龄（岁）"/>
+            <Label Content="5.体温（℃）"/>
+            <Label Content="6.去掉脂肪身体重量（kg）"/>
+            <Label Content="7.脂肪率（%）"/>
+            <Label Content="8.皮下脂肪率（%）"/>
+            <Label Content="9.内脏脂肪等级"/>
+            <Label Content="10.身体水分（%）"/>
+            <Label Content="11.骨骼肌率（%）"/>
+            <Label Content="12.骨量（%）"/>
+            <Label Content="13.基础代谢（Kcal）"/>
+            <Label Content="14.心率"/>
+            <Label Content="15.蛋白质（%）"/>
+            <Label Content="16.血乳酸"/>
+            <Label Content="17.磷酸肌酸"/>
+            <Label Content="18.尿蛋白"/>
+            <Label Content="19.血红蛋白"/>
+            <Label Content="20.氧合肌红蛋白"/>
+        </WrapPanel>
+        <WrapPanel x:Name="wrapPanel3" Margin="30,10,0,0">
+            <Label x:Name="userNameLabel3" FontWeight="Bold" FontSize="18"/>
+            <Label Content="1.inBody字段1" Margin="20,0,0,0"/>
+            <Label Content="2.inBody字段2"/>
+            <Label Content="3.inBody字段3"/>
+            <Label Content="4.inBody字段4"/>
+            <Label Content="5.inBody字段5"/>
+            <Label Content="6.inBody字段6"/>
+            <Label Content="7.inBody字段7"/>
+            <Label Content="8.inBody字段8"/>
+            <Label Content="9.inBody字段9"/>
+            <Label Content="10.inBody字段10"/>
+            <Label Content="11.inBody字段11"/>
+            <Label Content="12.inBody字段12"/>
+            <Label Content="13.inBody字段13"/>
+            <Label Content="14.inBody字段14"/>
+            <Label Content="15.inBody字段15"/>
+        </WrapPanel>
+        <Button Grid.Row="1"
+                Content="测试导出"
+                Margin="0,0,75,0"
+                Width="75" 
+                Height="50" 
+                HorizontalAlignment="Right" 
+                Click="Button_Click"
+                Style="{StaticResource pdfStyle}"/>
+        <lvc:BarChart Grid.Row="2" LegendLocation="Right" Series="{Binding SeriesBar}">
+            <lvc:BarChart.AxisY>
+                <lvc:Axis Title="Calificaciones"/>
+            </lvc:BarChart.AxisY>
+            <lvc:BarChart.AxisX>
+                <lvc:Axis Labels="{Binding Labels}" Title="Alumnos">
+                </lvc:Axis>
+            </lvc:BarChart.AxisX>
+        </lvc:BarChart>
+    </Grid>
+</Window>

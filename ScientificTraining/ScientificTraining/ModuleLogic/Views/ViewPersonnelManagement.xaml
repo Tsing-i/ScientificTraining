@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="ModuleLogic.Views.ViewPersonnelManagement"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"             
+             prism:ViewModelLocator.AutoWireViewModel="True" 
+             Width="1920" Height="1080">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/ViewPersonnelManagementStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="#FFFFFF">
+        <Grid Grid.Row="1" Background="#F5F6FA">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="260"/>
+            </Grid.ColumnDefinitions>
+            <ListView x:Name="ListView" 
+                      ItemsSource="{Binding Path=PersonCollectionView}"
+                      SelectionChanged="ListView_SelectionChanged" 
+                      Style="{StaticResource ListViewStyle1}"
+                      Margin="20,20,20,0">
+                <ListView.View>
+                    <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}">
+                        <GridViewColumn Header="姓名" DisplayMemberBinding="{Binding name}" Width="300"/>
+                        <GridViewColumn Header="权限" DisplayMemberBinding="{Binding power}" Width="300"/>
+                        <GridViewColumn Header="账号" DisplayMemberBinding="{Binding usr}" Width="300"/>
+                        <GridViewColumn Header="密码" DisplayMemberBinding="{Binding pwd}" Width="300"/>
+                        <GridViewColumn Header="备注" DisplayMemberBinding="{Binding remarks}" Width="420"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <Border Grid.Column="1">
+                <Border Margin="10,20,25,10" CornerRadius="10" Background="#FFFFFF">
+                    <StackPanel>
+                        <Button Command="{Binding RefreshCommand}" Margin="0,30,0,0" Width="172" Height="63" Style="{StaticResource RefreshStyle}"/>
+                        <Button Command="{Binding AddCommand}" Margin="0,30,0,0" Width="172" Height="63" Style="{StaticResource AddStyle}"/>
+                        <Button Command="{Binding DeleteCommand}" Margin="0,30,0,0" Width="172" Height="63" Style="{StaticResource DeleteStyle}"/>
+                    </StackPanel>
+                </Border>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>
+    

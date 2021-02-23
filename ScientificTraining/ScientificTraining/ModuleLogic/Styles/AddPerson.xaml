@@ -1,0 +1,80 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="TimeForwardStyle" TargetType="Button">
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+                        <Image x:Name="Img" VerticalAlignment="Center" HorizontalAlignment="Center" Source="/Images/16a.png" Stretch="None"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Img" Property="Source" Value="/Images/16a.png"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Img" Property="Source" Value="/Images/16a.png"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="buttonStyle" TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Label HorizontalAlignment="Center" Foreground="{TemplateBinding Foreground}" Content="{TemplateBinding Content}" FontSize="19"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="LabelStyle" TargetType="{x:Type Label}">
+        <Setter Property="Margin" Value="40,0,0,0"/>
+        <Setter Property="Foreground" Value="#333333"/>
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontFamily" Value="Noto Sans S Chinese"/>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+    <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+    <Style x:Key="WrapPanelStyle" TargetType="{x:Type WrapPanel}">
+        <Setter Property="Margin" Value="0,20,0,0"/>
+        <Setter Property="Height" Value="35"/>
+    </Style>
+    <Style x:Key="WrapPanelStyle1" TargetType="{x:Type WrapPanel}">
+        <Setter Property="Margin" Value="0,10,0,0"/>
+        <Setter Property="Height" Value="35"/>
+    </Style>
+    <Style x:Key="LineStyle" TargetType="{x:Type Line}">
+        <Setter Property="X1" Value="3"/>
+        <Setter Property="Y1" Value="1"/>
+        <Setter Property="X2" Value="260"/>
+        <Setter Property="Y2" Value="1"/>
+        <Setter Property="Stroke" Value="#89B1E6"/>
+        <Setter Property="StrokeThickness" Value="1"/>
+    </Style>
+    <Style x:Key="pdfStyle" TargetType="Button">
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+                        <Image x:Name="Img" VerticalAlignment="Center" HorizontalAlignment="Center" Source="/Images/pdf.png" Stretch="None"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Img" Property="Source" Value="/Images/pdf.png"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Img" Property="Source" Value="/Images/pdf.png"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

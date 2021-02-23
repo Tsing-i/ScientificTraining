@@ -1,0 +1,382 @@
+﻿<UserControl x:Class="ModuleLogic.Views.TimeArea"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"             
+             prism:ViewModelLocator.AutoWireViewModel="True" 
+             Height="504" Width="393">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/TimeAreaStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Border Height="474" Margin="0,20,0,0" CornerRadius="10" Background="#FFFFFF">
+        <StackPanel>
+            <WrapPanel Height="70">
+                <Label Margin="15,20,0,0" Width="100" Content="{Binding ShowDate}" FontSize="18" FontWeight="Bold" Foreground="#3A3933"/>
+                <Button Width="10.25" Height="13.5" Margin="28,20,0,0" Style="{StaticResource TimeBackoffStyle}" Command="{Binding TimeBackofCommand}"/>
+                <Button Width="10.25" Height="13.5" Margin="15,20,0,0" Style="{StaticResource TimeForwardStyle}" Command="{Binding TimeForwardCommand}"/>
+            </WrapPanel>
+            <WrapPanel>
+                <Label Margin="15,0,0,0" Content="Mon" Foreground="#A4A4A4" FontSize="14"/>
+                <Label Margin="15,0,0,0" Content="Tue" Foreground="#A4A4A4" FontSize="14"/>
+                <Label Margin="14,0,0,0" Content="Wed" Foreground="#A4A4A4" FontSize="14"/>
+                <Label Margin="15,0,0,0" Content="Thu" Foreground="#A4A4A4" FontSize="14"/>
+                <Label Margin="17,0,0,0" Content="Fri" Foreground="#A4A4A4" FontSize="14"/>
+                <Label Margin="17,0,0,0" Content="Sat" Foreground="#A4A4A4" FontSize="14"/>
+                <Label Margin="25,0,0,0" Content="Sun" Foreground="#A4A4A4" FontSize="14"/>
+            </WrapPanel>
+            <ScrollViewer x:Name="DigitalScroll" Height="375" Width="390" VerticalScrollBarVisibility="Visible">
+                <WrapPanel Margin="0,-30,0,0">
+                    <Border Width="{Binding Complement}"/>
+                    <Border>
+                        <RadioButton Visibility="{Binding day1Visi}"
+                                 Background="{Binding day1Back}"
+                                 Foreground="{Binding day1Fore}" 
+                                 Content="1" 
+                                 ToolTip="用户右键将删除次训练计划"
+                                 Style="{StaticResource RadioThemeColor}">
+                            <RadioButton.InputBindings>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding CancelTraining}" CommandParameter="1"/>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding SendTime}" CommandParameter="1"/>
+                            </RadioButton.InputBindings>
+                        </RadioButton>
+                    </Border>
+                    <Border>
+                        <RadioButton Visibility="{Binding day2Visi}"
+                                 Content="2" 
+                                 Background="{Binding day2Back}"
+                                 Foreground="{Binding day2Fore}" 
+                                 Style="{StaticResource RadioThemeColor}">
+                            <RadioButton.InputBindings>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding CancelTraining}" CommandParameter="2"/>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding SendTime}" CommandParameter="2"/>
+                            </RadioButton.InputBindings>
+                        </RadioButton>
+                    </Border>
+                    <Border>
+                        <RadioButton Visibility="{Binding day3Visi}"
+                                 Content="3"
+                                 Background="{Binding day3Back}"
+                                 Foreground="{Binding day3Fore}" 
+                                 Style="{StaticResource RadioThemeColor}">
+                            <RadioButton.InputBindings>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding CancelTraining}" CommandParameter="3"/>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding SendTime}" CommandParameter="3"/>
+                            </RadioButton.InputBindings>
+                        </RadioButton>
+                    </Border>
+                    <Border>
+                        <RadioButton Visibility="{Binding day4Visi}" 
+                                 Background="{Binding day4Back}"
+                                 Foreground="{Binding day4Fore}" 
+                                 Content="4" Style="{StaticResource RadioThemeColor}">
+                            <RadioButton.InputBindings>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding CancelTraining}" CommandParameter="4"/>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding SendTime}" CommandParameter="4"/>
+                            </RadioButton.InputBindings>
+                        </RadioButton>
+                    </Border>
+                    <Border>
+                        <RadioButton Visibility="{Binding day5Visi}" 
+                                 Background="{Binding day5Back}"
+                                 Foreground="{Binding day5Fore}" 
+                                 Content="5" Style="{StaticResource RadioThemeColor}">
+                            <RadioButton.InputBindings>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding CancelTraining}" CommandParameter="5"/>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding SendTime}" CommandParameter="5"/>
+                            </RadioButton.InputBindings>
+                        </RadioButton>
+                    </Border>
+                    <Border>
+                        <RadioButton Visibility="{Binding day6Visi}" 
+                                 Background="{Binding day6Back}"
+                                 Foreground="{Binding day6Fore}" 
+                                 Content="6" Style="{StaticResource RadioThemeColor}">
+                            <RadioButton.InputBindings>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding CancelTraining}" CommandParameter="6"/>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding SendTime}" CommandParameter="6"/>
+                            </RadioButton.InputBindings>
+                        </RadioButton>
+                    </Border>
+                    <Border>
+                        <RadioButton Visibility="{Binding day7Visi}"
+                                 Background="{Binding day7Back}"
+                                 Foreground="{Binding day7Fore}" 
+                                 Content="7" Style="{StaticResource RadioThemeColor}">
+                            <RadioButton.InputBindings>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding CancelTraining}" CommandParameter="7"/>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding SendTime}" CommandParameter="7"/>
+                            </RadioButton.InputBindings>
+                        </RadioButton>
+                    </Border>
+                    <Border>
+                        <RadioButton Visibility="{Binding day8Visi}"
+                                 Background="{Binding day8Back}"
+                                 Foreground="{Binding day8Fore}" 
+                                 Content="8" Style="{StaticResource RadioThemeColor}">
+                            <RadioButton.InputBindings>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding CancelTraining}" CommandParameter="8"/>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding SendTime}" CommandParameter="8"/>
+                            </RadioButton.InputBindings>
+                        </RadioButton>
+                    </Border>
+                    <Border>
+                        <RadioButton Visibility="{Binding day9Visi}"
+                                 Background="{Binding day9Back}"
+                                 Foreground="{Binding day9Fore}" 
+                                 Content="9" Style="{StaticResource RadioThemeColor}">
+                            <RadioButton.InputBindings>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding CancelTraining}" CommandParameter="9"/>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding SendTime}" CommandParameter="9"/>
+                            </RadioButton.InputBindings>
+                        </RadioButton>
+                    </Border>
+                    <Border>
+                        <RadioButton Visibility="{Binding day10Visi}"
+                                 Background="{Binding day10Back}"
+                                 Foreground="{Binding day10Fore}" 
+                                 Content="10" Style="{StaticResource RadioThemeColor}">
+                            <RadioButton.InputBindings>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding CancelTraining}" CommandParameter="10"/>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding SendTime}" CommandParameter="10"/>
+                            </RadioButton.InputBindings>
+                        </RadioButton>
+                    </Border>
+                    <Border>
+                        <RadioButton Visibility="{Binding day11Visi}" 
+                                 Background="{Binding day11Back}"
+                                 Foreground="{Binding day11Fore}" 
+                                 Content="11" Style="{StaticResource RadioThemeColor}">
+                            <RadioButton.InputBindings>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding CancelTraining}" CommandParameter="11"/>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding SendTime}" CommandParameter="11"/>
+                            </RadioButton.InputBindings>
+                        </RadioButton>
+                    </Border>
+                    <Border>
+                        <RadioButton Visibility="{Binding day12Visi}"
+                                 Background="{Binding day12Back}"
+                                 Foreground="{Binding day12Fore}" 
+                                 Content="12" Style="{StaticResource RadioThemeColor}">
+                            <RadioButton.InputBindings>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding CancelTraining}" CommandParameter="12"/>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding SendTime}" CommandParameter="12"/>
+                            </RadioButton.InputBindings>
+                        </RadioButton>
+                    </Border>
+                    <Border>
+                        <RadioButton Visibility="{Binding day13Visi}"
+                                 Background="{Binding day13Back}"
+                                 Foreground="{Binding day13Fore}" 
+                                 Content="13" Style="{StaticResource RadioThemeColor}">
+                            <RadioButton.InputBindings>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding CancelTraining}" CommandParameter="13"/>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding SendTime}" CommandParameter="13"/>
+                            </RadioButton.InputBindings>
+                        </RadioButton>
+                    </Border>
+                    <Border>
+                        <RadioButton Visibility="{Binding day14Visi}" 
+                                 Background="{Binding day14Back}"
+                                 Foreground="{Binding day14Fore}" 
+                                 Content="14" Style="{StaticResource RadioThemeColor}">
+                            <RadioButton.InputBindings>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding CancelTraining}" CommandParameter="14"/>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding SendTime}" CommandParameter="14"/>
+                            </RadioButton.InputBindings>
+                        </RadioButton>
+                    </Border>
+                    <Border>
+                        <RadioButton Visibility="{Binding day15Visi}" 
+                                 Background="{Binding day15Back}"
+                                 Foreground="{Binding day15Fore}" 
+                                 Content="15" Style="{StaticResource RadioThemeColor}">
+                            <RadioButton.InputBindings>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding CancelTraining}" CommandParameter="15"/>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding SendTime}" CommandParameter="15"/>
+                            </RadioButton.InputBindings>
+                        </RadioButton>
+                    </Border>
+                    <Border>
+                        <RadioButton Visibility="{Binding day16Visi}"
+                                 Background="{Binding day16Back}"
+                                 Foreground="{Binding day16Fore}" 
+                                 Content="16" Style="{StaticResource RadioThemeColor}">
+                            <RadioButton.InputBindings>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding CancelTraining}" CommandParameter="16"/>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding SendTime}" CommandParameter="16"/>
+                            </RadioButton.InputBindings>
+                        </RadioButton>
+                    </Border>
+                    <Border>
+                        <RadioButton Visibility="{Binding day17Visi}"
+                                 Background="{Binding day17Back}"
+                                 Foreground="{Binding day17Fore}" 
+                                 Content="17" Style="{StaticResource RadioThemeColor}">
+                            <RadioButton.InputBindings>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding CancelTraining}" CommandParameter="17"/>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding SendTime}" CommandParameter="17"/>
+                            </RadioButton.InputBindings>
+                        </RadioButton>
+                    </Border>
+                    <Border>
+                        <RadioButton Visibility="{Binding day18Visi}" 
+                                 Background="{Binding day18Back}"
+                                 Foreground="{Binding day18Fore}" 
+                                 Content="18" Style="{StaticResource RadioThemeColor}">
+                            <RadioButton.InputBindings>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding CancelTraining}" CommandParameter="18"/>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding SendTime}" CommandParameter="18"/>
+                            </RadioButton.InputBindings>
+                        </RadioButton>
+                    </Border>
+                    <Border>
+                        <RadioButton Visibility="{Binding day19Visi}"
+                                 Background="{Binding day19Back}"
+                                 Foreground="{Binding day19Fore}" 
+                                 Content="19" Style="{StaticResource RadioThemeColor}">
+                            <RadioButton.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding SendTime}" CommandParameter="19"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding CancelTraining}" CommandParameter="19"/>
+                            </RadioButton.InputBindings>
+                        </RadioButton>
+                    </Border>
+                    <Border>
+                        <RadioButton Visibility="{Binding day20Visi}"
+                                 Background="{Binding day20Back}"
+                                 Foreground="{Binding day20Fore}" 
+                                 Content="20" Style="{StaticResource RadioThemeColor}">
+                            <RadioButton.InputBindings>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding CancelTraining}" CommandParameter="20"/>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding SendTime}" CommandParameter="20"/>
+                            </RadioButton.InputBindings>
+                        </RadioButton>
+                    </Border>
+                    <Border>
+                        <RadioButton Visibility="{Binding day21Visi}"
+                                 Background="{Binding day21Back}"
+                                 Foreground="{Binding day21Fore}" 
+                                 Content="21" Style="{StaticResource RadioThemeColor}">
+                            <RadioButton.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding SendTime}" CommandParameter="21"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding CancelTraining}" CommandParameter="21"/>
+                            </RadioButton.InputBindings>
+                        </RadioButton>
+                    </Border>
+                    <Border>
+                        <RadioButton Visibility="{Binding day22Visi}"
+                                 Background="{Binding day22Back}"
+                                 Foreground="{Binding day22Fore}" 
+                                 Content="22" Style="{StaticResource RadioThemeColor}">
+                            <RadioButton.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding SendTime}" CommandParameter="22"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding CancelTraining}" CommandParameter="22"/>
+                            </RadioButton.InputBindings>
+                        </RadioButton>
+                    </Border>
+                    <Border>
+                        <RadioButton Visibility="{Binding day23Visi}"
+                                 Background="{Binding day23Back}"
+                                 Foreground="{Binding day23Fore}" 
+                                 Content="23" Style="{StaticResource RadioThemeColor}">
+                            <RadioButton.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding SendTime}" CommandParameter="23"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding CancelTraining}" CommandParameter="23"/>
+                            </RadioButton.InputBindings>
+                        </RadioButton>
+                    </Border>
+                    <Border>
+                        <RadioButton Visibility="{Binding day24Visi}"
+                                 Background="{Binding day24Back}"
+                                 Foreground="{Binding day24Fore}" 
+                                 Content="24" Style="{StaticResource RadioThemeColor}">
+                            <RadioButton.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding SendTime}" CommandParameter="24"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding CancelTraining}" CommandParameter="24"/>
+                            </RadioButton.InputBindings>
+                        </RadioButton>
+                    </Border>
+                    <Border>
+                        <RadioButton Visibility="{Binding day25Visi}" 
+                                 Background="{Binding day25Back}"
+                                 Foreground="{Binding day25Fore}" 
+                                 Content="25" Style="{StaticResource RadioThemeColor}">
+                            <RadioButton.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding SendTime}" CommandParameter="25"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding CancelTraining}" CommandParameter="25"/>
+                            </RadioButton.InputBindings>
+                        </RadioButton>
+                    </Border>
+                    <Border>
+                        <RadioButton Visibility="{Binding day26Visi}"
+                                 Background="{Binding day26Back}"
+                                 Foreground="{Binding day26Fore}" 
+                                 Content="26" Style="{StaticResource RadioThemeColor}">
+                            <RadioButton.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding SendTime}" CommandParameter="26"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding CancelTraining}" CommandParameter="26"/>
+                            </RadioButton.InputBindings>
+                        </RadioButton>
+                    </Border>
+                    <Border>
+                        <RadioButton Visibility="{Binding day27Visi}" 
+                                 Background="{Binding day27Back}"
+                                 Foreground="{Binding day27Fore}" 
+                                 Content="27" Style="{StaticResource RadioThemeColor}">
+                            <RadioButton.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding SendTime}" CommandParameter="27"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding CancelTraining}" CommandParameter="27"/>
+                            </RadioButton.InputBindings>
+                        </RadioButton>
+                    </Border>
+                    <Border>
+                        <RadioButton Visibility="{Binding day28Visi}"
+                                 Background="{Binding day28Back}"
+                                 Foreground="{Binding day28Fore}" 
+                                 Content="28" Style="{StaticResource RadioThemeColor}">
+                            <RadioButton.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding SendTime}" CommandParameter="28"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding CancelTraining}" CommandParameter="28"/>
+                            </RadioButton.InputBindings>
+                        </RadioButton>
+                    </Border>
+                    <Border>
+                        <RadioButton Visibility="{Binding day29Visi}"
+                                 Background="{Binding day29Back}"
+                                 Foreground="{Binding day29Fore}" 
+                                 Content="29" Style="{StaticResource RadioThemeColor}">
+                            <RadioButton.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding SendTime}" CommandParameter="29"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding CancelTraining}" CommandParameter="29"/>
+                            </RadioButton.InputBindings>
+                        </RadioButton>
+                    </Border>
+                    <Border>
+                        <RadioButton Visibility="{Binding day30Visi}"
+                                 Background="{Binding day30Back}"
+                                 Foreground="{Binding day30Fore}" 
+                                 Content="30" Style="{StaticResource RadioThemeColor}">
+                            <RadioButton.InputBindings>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding CancelTraining}" CommandParameter="30"/>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding SendTime}" CommandParameter="30"/>
+                            </RadioButton.InputBindings>
+                        </RadioButton>
+                    </Border>
+                    <Border>
+                        <RadioButton Visibility="{Binding day31Visi}"
+                                 Background="{Binding day31Back}"
+                                 Foreground="{Binding day31Fore}" 
+                                 Content="31" Style="{StaticResource RadioThemeColor}">
+                            <RadioButton.InputBindings>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding CancelTraining}" CommandParameter="31"/>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding SendTime}" CommandParameter="31"/>
+                            </RadioButton.InputBindings>
+                        </RadioButton>
+                    </Border>
+                </WrapPanel>
+            </ScrollViewer>
+        </StackPanel>
+    </Border>
+</UserControl>

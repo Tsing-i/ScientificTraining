@@ -1,0 +1,115 @@
+﻿<UserControl x:Class="ModuleLogic.Views.ViewVideoManagement"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"             
+             prism:ViewModelLocator.AutoWireViewModel="True" 
+             Width="1920" Height="950">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/ViewVideoManagementStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="#F5F6FA">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1090"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Border Width="1057" Height="929"  Style="{StaticResource borderStyle}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#2F3443">
+                    <Label Content="训练视频" ToolTip="默认显示最近一个月的训练视频" Style="{StaticResource labelStyle}"/>
+                </Border>
+                <Border Grid.Row="1" CornerRadius="6">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <WrapPanel x:Name="PeopleContainer" Margin="12,0,0,0" Height="35">
+                            <Border>
+                                <RadioButton Content="全部" Foreground="#1DA773" FontWeight="Bold" Margin="0,0,0,0" Style="{StaticResource RadioKeyboardStyle}"/>
+                            </Border>
+                        </WrapPanel>
+                        <ListBox x:Name="TrainingVideo" 
+                                 Grid.Row="1"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                                 BorderThickness="0"
+                                 Background="#FFFFFF" 
+                                 SelectionChanged="TrainingVideo_SelectionChanged"
+                                 ItemContainerStyle="{StaticResource videoStyle}">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel IsItemsHost="True"/>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                        </ListBox>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="513"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border Width="810" Height="483" HorizontalAlignment="Left" Style="{StaticResource borderStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#1DA773">
+                        <Label Content="精彩视频" Style="{StaticResource labelStyle}"/>
+                    </Border>
+                    <Border Grid.Row="1" CornerRadius="6">
+                        <ListBox x:Name="WonderfulVideo" 
+                                 Grid.Row="1"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                                 BorderThickness="0"
+                                 Background="#FFFFFF" 
+                                 SelectionChanged ="WonderfulVideo_SelectionChanged"
+                                 ItemContainerStyle="{StaticResource videoStyle}">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel IsItemsHost="True"/>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                        </ListBox>
+                    </Border>
+                </Grid>
+            </Border>
+            <Border Grid.Row="1" Width="810" Height="420" HorizontalAlignment="Left" Style="{StaticResource borderStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#507FFF">
+                        <Label Content="上传视频" Style="{StaticResource labelStyle}"/>
+                    </Border>
+                    <Border Grid.Row="1" CornerRadius="6" VerticalAlignment="Top">
+                        <ListBox x:Name="UploadVideo" 
+                                 Grid.Row="1"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                                 BorderThickness="0"
+                                 Background="#FFFFFF" 
+                                 SelectionChanged="UploadVideo_SelectionChanged"
+                                 ItemContainerStyle="{StaticResource videoStyle}">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel IsItemsHost="True"/>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                        </ListBox>
+                    </Border>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

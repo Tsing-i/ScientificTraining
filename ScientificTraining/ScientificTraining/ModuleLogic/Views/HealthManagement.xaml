@@ -1,0 +1,1817 @@
+﻿<UserControl x:Class="ModuleLogic.Views.HealthManagement"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"       
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             prism:ViewModelLocator.AutoWireViewModel="True" 
+             Width="1920" Height="1080">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/HealthManagementStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="#F5F6FA">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="433"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Width="393">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="494"/>
+                <RowDefinition Height="435"/>
+            </Grid.RowDefinitions>
+            <ContentControl Margin="0,10,0,0" prism:RegionManager.RegionName="TimeAreaContentRegion1"/>
+            <ContentControl Grid.Row="1" prism:RegionManager.RegionName="AthletesShowContentRegion"/>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="500"/>
+                <RowDefinition Height="320"/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <WrapPanel Height="70">
+                    <Label Margin="25,10,0,0" Content="{Binding ExactDate}" Width="240" FontSize="35" FontWeight="Bold" Foreground="#3A3933"/>
+                    <Label Name="userLabel" Margin="10,10,0,0" Content="{Binding UserName}" Width="260" FontSize="35" FontWeight="Bold" Foreground="#3A3933"/>
+                    <Button Click="Button_Click" Width="50" Height="50" ToolTip="导出运动员体测报告" HorizontalAlignment="Right" Margin="800,10,70,0" Style="{StaticResource pdfStyle}"/>
+                </WrapPanel>
+            </Grid>
+            <Border Grid.Row="1" Width="1464" CornerRadius="10" Background="#FFFFFF" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <WrapPanel>
+                        <Label Margin="30,10,0,0" Content="基础数据" FontSize="30"/>
+                        <ListBox x:Name="BasicsContainer" BorderThickness="0" ItemsSource="{Binding Path=FunctionCollectionView}" Width="1000" Margin="30,15,0,0" Height="35" HorizontalAlignment="Right">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionBasicsContainerChangedCmd}"
+                                       CommandParameter="{Binding ElementName=BasicsContainer}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel IsItemsHost="True" />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                        </ListBox>
+                    </WrapPanel>
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible">
+                        <Grid>
+                            <WrapPanel Visibility="{Binding Wrap1_Visibility}">
+                                <Border Margin="30,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="年龄" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label1" Content="{Binding age}" ToolTip="{Binding age}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding physical_age_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding  physical_age_trend}" Foreground="#0BA1A7" FontWeight="Bold"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="50,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="身高（厘米）" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label2" Content="{Binding height}" ToolTip="{Binding height}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding physical_height_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding physical_height_trend}" Foreground="#0BA1A7" FontWeight="Bold"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="50,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="体重（kg）" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label3" Content="{Binding weight}" ToolTip="{Binding weight}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding physical_weight_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding physical_weight_trend}" Foreground="#0BA1A7" FontWeight="Bold"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="50,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="收缩压" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label4" Content="{Binding sbp}" ToolTip="{Binding sbp}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding physical_sbp_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding physical_sbp_trend}" Foreground="#0BA1A7" FontWeight="Bold"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="50,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="舒张压" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label5" Content="{Binding dbp}" ToolTip="{Binding dbp}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding physical_dbp_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding physical_dbp_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="30,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="脉搏" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label6" Content="{Binding pulse}" ToolTip="{Binding pulse}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding physical_pulse_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding physical_pulse_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="50,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="细胞内液" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label7" Content="{Binding fic}" ToolTip="{Binding fic}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding physical_fic_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding physical_fic_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="50,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="建议每日摄取卡路里" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label8" Content="{Binding basicMetabolismScope}" ToolTip="{Binding basicMetabolismScope}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding physical_basicMetabolismScope_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding physical_basicMetabolismScope_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="50,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="除脂肪量（Kg）" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label9" Content="{Binding exceptFat}" ToolTip="{Binding exceptFat}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding physical_exceptFat_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding physical_exceptFat_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="50,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="肌肉量（Kg）" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label10" Content="{Binding muscle}" ToolTip="{Binding muscle}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding physical_muscle_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding physical_muscle_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="30,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="脂肪量（Kg）" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label11" Content="{Binding fat}" ToolTip="{Binding fat}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding physical_fat_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding physical_fat_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="50,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="基础代谢值" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label12" Content="{Binding basicMetabolism}" ToolTip="{Binding basicMetabolism}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding physical_basicMetabolism_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding physical_basicMetabolism_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="50,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="水分率（%）" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label13" Content="{Binding waterRate}" ToolTip="{Binding waterRate}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding physical_waterRate_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding physical_waterRate_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="50,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="水分含量（kg）" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label14" Content="{Binding water}" ToolTip="{Binding water}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding physical_water_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding physical_water_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="50,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="骨骼量（kg）" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label15" Content="{Binding bmc}" ToolTip="{Binding bmc}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding physical_bmc_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding physical_bmc_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="30,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="细胞外液（kg）" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label16" Content="{Binding foc}" ToolTip="{Binding foc}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding physical_foc_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding physical_foc_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="50,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="内脏等级（kg）" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label17" Content="{Binding viscera}" ToolTip="{Binding viscera}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding physical_viscera_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding physical_viscera_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="50,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="体温" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label18" Content="{Binding tiwen}" ToolTip="{Binding tiwen}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding physical_tiwen_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding physical_tiwen_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="50,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="血氧" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label19" Content="{Binding oxygen}" ToolTip="{Binding oxygen}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding physical_oxygen_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding physical_oxygen_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="50,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="腰臀比" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label20" Content="{Binding Yaotunbi}" ToolTip="{Binding Yaotunbi}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding physical_Yaotunbi_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding physical_Yaotunbi_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="30,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="腰围" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label21" Content="{Binding yao}" ToolTip="{Binding yao}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding physical_yao_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding physical_yao_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="50,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="臀围" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label22" Content="{Binding tun}" ToolTip="{Binding tun}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding physical_tun_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding physical_tun_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="50,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="体质指数" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label23" Content="{Binding Bmi}" ToolTip="{Binding Bmi}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding physical_Bmi_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding physical_Bmi_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="50,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="其他成份（kg）" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label24" Content="{Binding otherComponent}" ToolTip="{Binding otherComponent}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding physical_otherComponent_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding physical_otherComponent_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                            </WrapPanel>
+                            <WrapPanel Visibility="{Binding Wrap2_Visibility}">
+                                <Border Margin="30,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="血氧（M/F）" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label25" Content="{Binding blood_oxygen}" ToolTip="{Binding blood_oxygen}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding blood_oxygen_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding blood_oxygen_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="51,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="身高（cm）" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label26" Content="{Binding height}" ToolTip="{Binding height}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding height_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding height_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="51,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="体重（kg）" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label27" Content="{Binding weight}" ToolTip="{Binding weight}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding weight_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding weight_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="51,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="年龄（岁）" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label28" Content="{Binding age}" ToolTip="{Binding age}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding age_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding age_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="51,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="体温（℃）" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label29" Content="{Binding temperature}" ToolTip="{Binding temperature}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding temperature_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding temperature_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="30,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="去掉脂肪身体重量（kg）" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label30" Content="{Binding bmi}" ToolTip="{Binding bmi}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding bmi_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding bmi_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="51,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="脂肪率（%）" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label31" Content="{Binding fat_percentage}" ToolTip="{Binding fat_percentage}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding fat_percentage_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding fat_percentage_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="51,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="皮下脂肪率（%）" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label32" Content="{Binding subcutaneous_fat_rate}" ToolTip="{Binding subcutaneous_fat_rate}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding subcutaneous_fat_rate_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding subcutaneous_fat_rate_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="51,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="内脏脂肪等级" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label33" Content="{Binding visceral_fat_grade}" ToolTip="{Binding visceral_fat_grade}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding visceral_fat_grade_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding visceral_fat_grade}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="51,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="身体水分（%）" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label34" Content="{Binding body_moisture}" ToolTip="{Binding body_moisture}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding body_moisture_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding body_moisture_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="30,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="骨骼肌率（%）" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label35" Content="{Binding skeletal_muscle_rate}" ToolTip="{Binding skeletal_muscle_rate}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding skeletal_muscle_rate_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding skeletal_muscle_rate_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="51,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="骨量（%）" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label36" Content="{Binding bone_mass}" ToolTip="{Binding bone_mass}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding bone_mass_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding bone_mass_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="51,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="基础代谢（Kcal）" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label37" Content="{Binding basal_metabolism}" ToolTip="{Binding basal_metabolism}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding basal_metabolism_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding basal_metabolism_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="51,23,0,0" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="心率" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label38" Content="{Binding heart_rate}" ToolTip="{Binding heart_rate}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding heart_rate_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding heart_rate_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                            </WrapPanel>
+                            <WrapPanel Visibility="{Binding Wrap4_Visibility}">
+                                <Border Margin="30,23,0,30" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="inBody字段1" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label45" Content="{Binding inbody_field_1}" ToolTip="{Binding inbody_field_1}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding inbody_field_1_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding inbody_field_1_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="51,23,0,30" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="inBody字段2" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label46" Content="{Binding inbody_field_2}" ToolTip="{Binding inbody_field_2}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding inbody_field_2_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding inbody_field_2_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="51,23,0,30" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="inBody字段3" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label47" Content="{Binding inbody_field_3}" ToolTip="{Binding inbody_field_3}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding inbody_field_3_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding inbody_field_3_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="51,23,0,30" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="inBody字段4" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label48" Content="{Binding inbody_field_4}" ToolTip="{Binding inbody_field_4}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding inbody_field_4_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding inbody_field_4_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="51,23,0,30" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="inBody字段5" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label49" Content="{Binding inbody_field_5}" ToolTip="{Binding inbody_field_5}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding inbody_field_5_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding inbody_field_5_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="30,0,0,30" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="inBody字段6" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label50" Content="{Binding inbody_field_6}" ToolTip="{Binding inbody_field_6}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding inbody_field_6_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding inbody_field_6_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="51,0,0,30" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="inBody字段7" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label51" Content="{Binding inbody_field_7}" ToolTip="{Binding inbody_field_7}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding inbody_field_7_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding inbody_field_7_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="51,0,0,30" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="inBody字段8" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label52" Content="{Binding inbody_field_8}" ToolTip="{Binding inbody_field_8}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding inbody_field_8_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding inbody_field_8_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="51,0,0,30" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="inBody字段9" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label53" Content="{Binding inbody_field_9}" ToolTip="{Binding inbody_field_9}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding inbody_field_9_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding inbody_field_9_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="51,0,0,30" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="inBody字段10" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label54" Content="{Binding inbody_field_10}" ToolTip="{Binding inbody_field_10}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding inbody_field_10_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding inbody_field_10_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="30,0,0,30" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="inBody字段11" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label55" Content="{Binding inbody_field_11}" ToolTip="{Binding inbody_field_11}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding inbody_field_11_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding inbody_field_11_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="51,0,0,30" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="inBody字段12" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label56" Content="{Binding inbody_field_12}" ToolTip="{Binding inbody_field_12}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding inbody_field_12_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding inbody_field_12_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="51,0,0,30" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="inBody字段13" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label57" Content="{Binding inbody_field_13}" ToolTip="{Binding inbody_field_13}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding inbody_field_13_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding inbody_field_13_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="51,0,0,30" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="inBody字段14" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label58" Content="{Binding inbody_field_14}" ToolTip="{Binding inbody_field_14}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding inbody_field_14_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding inbody_field_14_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Margin="51,0,0,30" Style="{StaticResource borderStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                            <Label Content="inBody字段15" Style="{StaticResource labelStyle}"/>
+                                        </Border>
+                                        <Border Grid.Row="1" CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="66"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label x:Name="label59" Content="{Binding inbody_field_15}" ToolTip="{Binding inbody_field_15}" Style="{StaticResource figureStyle}"/>
+                                                <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                    <StackPanel >
+                                                        <Label Content="最近体测"/>
+                                                        <Label Content="{Binding inbody_field_15_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                        <Border Height="1" Background="#D9E1F3"/>
+                                                        <Label Content="变化趋势"/>
+                                                        <Label Margin="0,-5,0,0" Content="{Binding inbody_field_15_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                            </WrapPanel>
+                        </Grid>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+            <Border Grid.Row="2" Visibility="Visible" HorizontalAlignment="Center" Margin="0,40,0,0" Width="1464" Background="#FFFFFF" CornerRadius="10">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <WrapPanel>
+                        <Label Margin="30,10,0,0" Content="机能数据" FontSize="30"/>
+                        <ListBox x:Name="FunctionContainer" BorderThickness="0" Width="1000" ItemsSource="{Binding Path=BasicsCollectionView}" Margin="30,10,0,0" Height="35" HorizontalAlignment="Right">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionFunctionContainerChangedCmd}"
+                                       CommandParameter="{Binding ElementName=FunctionContainer}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel IsItemsHost="True" />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                        </ListBox>
+                        <Button Click="Button_Click_1" Margin="140,0,0,0" Width="25" Height="25" ToolTip="用户将机能数据上传到云端"  Style="{StaticResource upLoadStyle}"/>
+                    </WrapPanel>
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible">
+                        <WrapPanel Visibility="{Binding Wrap3_Visibility}">
+                            <Border Margin="30,23,0,0" Style="{StaticResource borderStyle}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="32"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                        <Label Content="蛋白质（%）" Style="{StaticResource labelStyle}"/>
+                                    </Border>
+                                    <Border Grid.Row="1" CornerRadius="6">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="66"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBox x:Name="textBox39" Text="{Binding protein}" Style="{StaticResource TextBoxStyle}"/>
+                                            <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                <StackPanel >
+                                                    <Label Content="最近体测"/>
+                                                    <Label Content="{Binding protein_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                    <Border Height="1" Background="#D9E1F3"/>
+                                                    <Label Content="变化趋势"/>
+                                                    <Label Margin="0,-5,0,0" Content="{Binding protein_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                </StackPanel>
+                                            </Border>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                            </Border>
+                            <Border Margin="51,23,0,0" Style="{StaticResource borderStyle}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="32"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                        <Label Content="血乳酸" Style="{StaticResource labelStyle}"/>
+                                    </Border>
+                                    <Border Grid.Row="1" CornerRadius="6">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="66"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBox x:Name="textBox40" Text="{Binding blood_lactic_acid}" Style="{StaticResource TextBoxStyle}"/>
+                                            <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                <StackPanel >
+                                                    <Label Content="最近体测"/>
+                                                    <Label Content="{Binding blood_lactic_acid_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                    <Border Height="1" Background="#D9E1F3"/>
+                                                    <Label Content="变化趋势"/>
+                                                    <Label Margin="0,-5,0,0" Content="{Binding blood_lactic_acid_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                </StackPanel>
+                                            </Border>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                            </Border>
+                            <Border Margin="51,23,0,0" Style="{StaticResource borderStyle}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="32"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                        <Label Content="磷酸肌酸" Style="{StaticResource labelStyle}"/>
+                                    </Border>
+                                    <Border Grid.Row="1" CornerRadius="6">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="66"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBox x:Name="textBox41" Text="{Binding creatine_phosphate}" Style="{StaticResource TextBoxStyle}"/>
+                                            <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                <StackPanel >
+                                                    <Label Content="最近体测"/>
+                                                    <Label Content="{Binding creatine_phosphate_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                    <Border Height="1" Background="#D9E1F3"/>
+                                                    <Label Content="变化趋势"/>
+                                                    <Label Margin="0,-5,0,0" Content="{Binding creatine_phosphate_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                </StackPanel>
+                                            </Border>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                            </Border>
+                            <Border Margin="51,23,0,0" Style="{StaticResource borderStyle}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="32"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                        <Label Content="尿蛋白" Style="{StaticResource labelStyle}"/>
+                                    </Border>
+                                    <Border Grid.Row="1" CornerRadius="6">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="66"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBox x:Name="textBox42" Text="{Binding urine_protein}" Style="{StaticResource TextBoxStyle}"/>
+                                            <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                <StackPanel >
+                                                    <Label Content="最近体测"/>
+                                                    <Label Content="{Binding urine_protein_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                    <Border Height="1" Background="#D9E1F3"/>
+                                                    <Label Content="变化趋势"/>
+                                                    <Label Margin="0,-5,0,0" Content="{Binding urine_protein_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                </StackPanel>
+                                            </Border>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                            </Border>
+                            <Border Margin="51,23,0,0" Style="{StaticResource borderStyle}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="32"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                        <Label Content="血红蛋白" Style="{StaticResource labelStyle}"/>
+                                    </Border>
+                                    <Border Grid.Row="1" CornerRadius="6">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="66"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBox x:Name="textBox43" Text="{Binding hemoglobin}" Style="{StaticResource TextBoxStyle}"/>
+                                            <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                <StackPanel >
+                                                    <Label Content="最近体测"/>
+                                                    <Label Content="{Binding hemoglobin_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                    <Border Height="1" Background="#D9E1F3"/>
+                                                    <Label Content="变化趋势"/>
+                                                    <Label Margin="0,-5,0,0" Content="{Binding hemoglobin_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                </StackPanel>
+                                            </Border>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                            </Border>
+                            <Border Margin="30,23,0,0" Style="{StaticResource borderStyle}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="32"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Border Grid.Row="0" CornerRadius="6,6,0,0" Background="#D9E1F3">
+                                        <Label Content="氧合肌红蛋白" Style="{StaticResource labelStyle}"/>
+                                    </Border>
+                                    <Border Grid.Row="1" CornerRadius="6">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="66"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBox x:Name="textBox44" Text="{Binding oxymyoglobin}" Style="{StaticResource TextBoxStyle}"/>
+                                            <Border Grid.Column="1" BorderBrush="#D9E1F3" BorderThickness="1">
+                                                <StackPanel >
+                                                    <Label Content="最近体测"/>
+                                                    <Label Content="{Binding oxymyoglobin_lately}" FontWeight="Bold" Foreground="#C3446B"/>
+                                                    <Border Height="1" Background="#D9E1F3"/>
+                                                    <Label Content="变化趋势"/>
+                                                    <Label Margin="0,-5,0,0" Content="{Binding oxymyoglobin_trend}" FontWeight="Bold" Foreground="#0BA1A7"/>
+                                                </StackPanel>
+                                            </Border>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                            </Border>
+                        </WrapPanel>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

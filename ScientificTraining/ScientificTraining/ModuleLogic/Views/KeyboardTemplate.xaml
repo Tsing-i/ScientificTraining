@@ -1,0 +1,78 @@
+﻿<UserControl x:Class="ModuleLogic.Views.KeyboardTemplate"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"             
+             prism:ViewModelLocator.AutoWireViewModel="True" 
+             Height="455" Width="433">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/KeyboardTemplateStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Border Grid.Row="1" Margin="0,20,0,0" CornerRadius="10" Background="#FFFFFF">
+        <ScrollViewer HorizontalAlignment="Left" Width="390">
+            <StackPanel>
+                <ScrollViewer x:Name="DigitalScroll"
+                          Margin="10"
+                          Height="100" Width="403" 
+                          VerticalScrollBarVisibility="Visible">
+                    <WrapPanel Name="DigitalContainer" Width="{Binding ElementName=DigitalScroll, Path=Width, Mode=OneWay}">
+                        <Border>
+                            <RadioButton Content="+" Foreground="#1DA773" FontWeight="Bold" Style="{StaticResource RadioKeyboardStyle}">
+                                <RadioButton.InputBindings>
+                                    <MouseBinding MouseAction="LeftClick" Command="{Binding PopupAddTrainingPlanContent}" CommandParameter="Digital"/>
+                                </RadioButton.InputBindings>
+                            </RadioButton>
+                        </Border>
+                    </WrapPanel>
+                </ScrollViewer>
+                <ScrollViewer x:Name="LetterlScroll"
+                          Margin="10"
+                          Height="100" Width="403" 
+                          VerticalScrollBarVisibility="Visible">
+                    <WrapPanel Name="LetterlContainer" Width="{Binding ElementName=LetterlScroll, Path=Width, Mode=OneWay}">
+                        <Border>
+                            <RadioButton Content="+" Foreground="#1DA773" FontWeight="Bold" Style="{StaticResource RadioKeyboardStyle}">
+                                <RadioButton.InputBindings>
+                                    <MouseBinding MouseAction="LeftClick" Command="{Binding PopupAddTrainingPlanContent}" CommandParameter="Letterl"/>
+                                </RadioButton.InputBindings>
+                            </RadioButton>
+                        </Border>
+                    </WrapPanel>
+                </ScrollViewer>
+                <!--专项训练-->
+                <ScrollViewer x:Name="WordsScroll"
+                          Margin="10"
+                          Height="150" Width="403" 
+                          VerticalScrollBarVisibility="Visible">
+                    <WrapPanel Name="WordsContainer" Width="{Binding ElementName=WordsScroll, Path=Width, Mode=OneWay}">
+                        <Border>
+                            <RadioButton Content="+" Foreground="#1DA773" FontWeight="Bold" Style="{StaticResource RadioKeyboardStyle}">
+                                <RadioButton.InputBindings>
+                                    <MouseBinding MouseAction="LeftClick" Command="{Binding PopupAddTrainingPlanContent}" CommandParameter="WordsContainer"/>
+                                </RadioButton.InputBindings>
+                            </RadioButton>
+                        </Border>
+                    </WrapPanel>
+                </ScrollViewer>
+                <!--力量训练-->
+                <ScrollViewer x:Name="PowerWordsScroll"
+                          Margin="10"
+                          Height="140" Width="403" 
+                          VerticalScrollBarVisibility="Visible">
+                    <WrapPanel Name="PowerWordsContainer" Width="{Binding ElementName=WordsScroll, Path=Width, Mode=OneWay}">
+                        <Border>
+                            <RadioButton Content="+" Foreground="#1DA773" FontWeight="Bold" Style="{StaticResource RadioKeyboardStyle}">
+                                <RadioButton.InputBindings>
+                                    <MouseBinding MouseAction="LeftClick" Command="{Binding PopupAddTrainingPlanContent}"/>
+                                </RadioButton.InputBindings>
+                            </RadioButton>
+                        </Border>
+                    </WrapPanel>
+                </ScrollViewer>
+            </StackPanel>
+        </ScrollViewer>
+    </Border>
+</UserControl>
